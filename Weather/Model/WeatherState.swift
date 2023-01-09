@@ -7,9 +7,9 @@ enum WeatherState {
 extension WeatherState {
     static func from(abbr: String) -> Self? {
         switch abbr {
-        case "light_rain": return .lightRain
-        case "light_cloud": return .lightCloud
-        case "showers": return .showers
+        case "lr": return .lightRain
+        case "lc": return .lightCloud
+        case "s": return .showers
         default: return nil
         }
     }

@@ -5,7 +5,7 @@ enum APIError: Error {
     case invalidResponse
     case errorResponse
     case emptyResponse
-    case unknownWeatherState
+    case unknownWeatherState(String)
 }
 
 final class RealWeatherAPI: WeatherAPI {
@@ -14,7 +14,17 @@ final class RealWeatherAPI: WeatherAPI {
 
     private let TORONTO_LOCATION_ID = 4418
 
-    private let decoder = JSONDecoder()
+    private lazy var iso8601Full: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        return formatter
+    }()
+
+    private lazy var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(iso8601Full)
+        return decoder
+    }()
 
     func fetchCurrentWeather() async throws -> Weather {
         guard let url = URL(string: "\(BASE_URL)/\(TORONTO_LOCATION_ID).json") else { throw APIError.invalidURL }
@@ -29,7 +39,8 @@ final class RealWeatherAPI: WeatherAPI {
 
         guard let mostRecentConsolidatedWeather = decodedResponse.consolidatedWeather.sorted().first else { throw APIError.emptyResponse  }
 
-        guard let state = WeatherState.from(abbr: mostRecentConsolidatedWeather.weatherStateAbbr) else { throw APIError.unknownWeatherState }
+        guard let state = WeatherState.from(abbr: mostRecentConsolidatedWeather.weatherStateAbbr)
+        else { throw APIError.unknownWeatherState(mostRecentConsolidatedWeather.weatherStateAbbr) }
 
         return Weather(temperature: mostRecentConsolidatedWeather.temperature,
                        min: mostRecentConsolidatedWeather.minTemp,
