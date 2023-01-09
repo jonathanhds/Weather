@@ -1,10 +1,3 @@
-//
-//  WeatherApp.swift
-//  Weather
-//
-//  Created by Jonathan Souza on 09/01/23.
-//
-
 import SwiftUI
 
 @main
