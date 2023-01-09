@@ -3,6 +3,6 @@ import XCTest
 
 final class WeatherTests: XCTestCase {
 
-    func testExample() throws {
+    func test_shouldDecodeAPIResponse() throws {
     }
 }
