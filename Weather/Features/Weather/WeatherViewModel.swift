@@ -21,6 +21,8 @@ final class WeatherViewModel: ObservableObject {
     }
 
     func fetchCurrentWeather() async {
+        state = .loading
+
         do {
             let weather = try await weatherAPI.fetchCurrentWeather()
             state = .data(weather)

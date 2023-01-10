@@ -11,7 +11,17 @@ struct WeatherView: View {
             case .loading:
                 ProgressView("Loading")
             case .error(let error):
-                Text(error.localizedDescription)
+                VStack(spacing: 12) {
+                    Text(error.localizedDescription)
+
+                    Button {
+                        Task {
+                            await viewModel.fetchCurrentWeather()
+                        }
+                    } label: {
+                        Label("Retry", systemImage: "arrow.clockwise")
+                    }
+                }
             case .data(let data):
                 WeatherDetailsView(weather: data)
             }
