@@ -42,7 +42,7 @@ final class RealWeatherAPI: WeatherAPI {
         guard let mostRecentConsolidatedWeather = decodedResponse.consolidatedWeather.sorted().first
         else { throw APIError.emptyResponse  }
 
-        guard let state = WeatherState.from(abbreviation: mostRecentConsolidatedWeather.weatherStateAbbr)
+        guard let state = WeatherState(rawValue: mostRecentConsolidatedWeather.weatherStateAbbr)
         else { throw APIError.unknownWeatherState(mostRecentConsolidatedWeather.weatherStateAbbr) }
 
         return Weather(temperature: Measurement(value: mostRecentConsolidatedWeather.temperature, unit: .celsius),

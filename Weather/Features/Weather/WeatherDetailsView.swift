@@ -11,12 +11,12 @@ struct WeatherDetailsView: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
-                AsyncImage(url: URL(string: "https://cdn.faire.com/static/mobile-take-home/icons/s.png")) { image in
+                AsyncImage(url: URL(string: "https://cdn.faire.com/static/mobile-take-home/icons/\(weather.state.rawValue).png")) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } placeholder: {
-                    Color.clear
+                    ProgressView()
                 }
                 .frame(maxWidth: 120, maxHeight: 100)
 

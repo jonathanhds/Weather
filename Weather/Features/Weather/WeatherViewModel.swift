@@ -1,20 +1,20 @@
 import Foundation
 
-enum State {
-    case loading
-    case error(Error)
-    case data(Weather)
-}
-
 @MainActor
 final class WeatherViewModel: ObservableObject {
 
-    let title = "Toronto"
+    enum State {
+        case loading
+        case error(Error)
+        case data(Weather)
+    }
 
-    private let weatherAPI: WeatherAPI
+    let title = "Toronto"
 
     @Published
     private(set) var state: State = .loading
+
+    private let weatherAPI: WeatherAPI
 
     init(weatherAPI: WeatherAPI = RealWeatherAPI()) {
         self.weatherAPI = weatherAPI
