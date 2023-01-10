@@ -1,6 +1,8 @@
+import Foundation
+
 struct Weather {
-    let temperature: Float
-    let min: Float
-    let max: Float
+    let temperature: Measurement<UnitTemperature>
+    let min: Measurement<UnitTemperature>
+    let max: Measurement<UnitTemperature>
     let state: WeatherState
 }

@@ -15,24 +15,30 @@ struct WeatherDetailsView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 100)
                 } placeholder: {
                     Color.clear
                 }
+                .frame(maxWidth: 120, maxHeight: 100)
 
-                Text("\(weather.temperature)º")
+                Text(weather.temperature.formatted())
                     .font(.system(size: 60))
-
             }
 
-            Text("Light cloud")
+            switch weather.state {
+            case .lightCloud:
+                Text("Light cloud")
+            case .showers:
+                Text("Showers")
+            case .lightRain:
+                Text("Light rain")
+            }
 
             HStack(spacing: 12) {
-                Text("L: 11º")
+                Text("L: \(weather.min.formatted())")
 
-                Text("H: 17º")
+                Text("H: \(weather.max.formatted())")
             }
-            .font(.system(size: 30))
+            .font(.system(size: 24))
         }
     }
 }
@@ -40,13 +46,22 @@ struct WeatherDetailsView: View {
 struct WeatherDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WeatherDetailsView(weather: .init(temperature: 27, min: 13, max: 31, state: .lightRain))
+            WeatherDetailsView(weather: .init(temperature: Measurement(value: 27, unit: .celsius),
+                                              min: Measurement(value: 13, unit: .celsius),
+                                              max: Measurement(value: 31, unit: .celsius),
+                                              state: .lightRain))
                 .previewDisplayName("Light rain")
 
-            WeatherDetailsView(weather: .init(temperature: 27, min: 13, max: 31, state: .lightCloud))
+            WeatherDetailsView(weather: .init(temperature: Measurement(value: 27, unit: .celsius),
+                                              min: Measurement(value: 13, unit: .celsius),
+                                              max: Measurement(value: 31, unit: .celsius),
+                                              state: .lightCloud))
                 .previewDisplayName("Light cloud")
 
-            WeatherDetailsView(weather: .init(temperature: 27, min: 13, max: 31, state: .showers))
+            WeatherDetailsView(weather: .init(temperature: Measurement(value: 27, unit: .celsius),
+                                              min: Measurement(value: 13, unit: .celsius),
+                                              max: Measurement(value: 31, unit: .celsius),
+                                              state: .showers))
                 .previewDisplayName("Showers")
         }
         .previewLayout(.fixed(width: 400, height: 200))

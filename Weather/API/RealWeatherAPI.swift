@@ -45,9 +45,9 @@ final class RealWeatherAPI: WeatherAPI {
         guard let state = WeatherState.from(abbreviation: mostRecentConsolidatedWeather.weatherStateAbbr)
         else { throw APIError.unknownWeatherState(mostRecentConsolidatedWeather.weatherStateAbbr) }
 
-        return Weather(temperature: mostRecentConsolidatedWeather.temperature,
-                       min: mostRecentConsolidatedWeather.minTemp,
-                       max: mostRecentConsolidatedWeather.maxTemp,
+        return Weather(temperature: Measurement(value: mostRecentConsolidatedWeather.temperature, unit: .celsius),
+                       min: Measurement(value: mostRecentConsolidatedWeather.minTemp, unit: .celsius),
+                       max: Measurement(value: mostRecentConsolidatedWeather.maxTemp, unit: .celsius),
                        state: state)
     }
 }
@@ -67,9 +67,9 @@ private struct WeatherResponse: Decodable {
 
 private struct ConsolidatedWeather: Decodable, Comparable {
     let created: Date
-    let minTemp: Float
-    let maxTemp: Float
-    let temperature: Float
+    let minTemp: Double
+    let maxTemp: Double
+    let temperature: Double
     let weatherStateAbbr: String
 
     enum CodingKeys: String, CodingKey {
@@ -83,9 +83,9 @@ private struct ConsolidatedWeather: Decodable, Comparable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.created = try container.decode(Date.self, forKey: .created)
-        self.minTemp = try container.decode(Float.self, forKey: .minTemp)
-        self.maxTemp = try container.decode(Float.self, forKey: .maxTemp)
-        self.temperature = try container.decode(Float.self, forKey: .temperature)
+        self.minTemp = try container.decode(Double.self, forKey: .minTemp)
+        self.maxTemp = try container.decode(Double.self, forKey: .maxTemp)
+        self.temperature = try container.decode(Double.self, forKey: .temperature)
         self.weatherStateAbbr = try container.decode(String.self, forKey: .weatherStateAbbr)
     }
 
