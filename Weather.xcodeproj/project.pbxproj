@@ -20,6 +20,7 @@
 		ABE1DB87296CB070006B6351 /* WeatherViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE1DB86296CB070006B6351 /* WeatherViewModelTests.swift */; };
 		ABE1DB8B296CB0BA006B6351 /* MockWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE1DB8A296CB0BA006B6351 /* MockWeatherAPI.swift */; };
 		ABE1DB8D296CB348006B6351 /* WeatherDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE1DB8C296CB348006B6351 /* WeatherDetailsView.swift */; };
+		ABE1DB8F296DB0AE006B6351 /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE1DB8E296DB0AE006B6351 /* MockError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		ABE1DB86296CB070006B6351 /* WeatherViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModelTests.swift; sourceTree = "<group>"; };
 		ABE1DB8A296CB0BA006B6351 /* MockWeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWeatherAPI.swift; sourceTree = "<group>"; };
 		ABE1DB8C296CB348006B6351 /* WeatherDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailsView.swift; sourceTree = "<group>"; };
+		ABE1DB8E296DB0AE006B6351 /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 		ABE1DB89296CB0B1006B6351 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				ABE1DB8E296DB0AE006B6351 /* MockError.swift */,
 				ABE1DB8A296CB0BA006B6351 /* MockWeatherAPI.swift */,
 			);
 			path = API;
@@ -347,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABE1DB87296CB070006B6351 /* WeatherViewModelTests.swift in Sources */,
+				ABE1DB8F296DB0AE006B6351 /* MockError.swift in Sources */,
 				ABE1DB8B296CB0BA006B6351 /* MockWeatherAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

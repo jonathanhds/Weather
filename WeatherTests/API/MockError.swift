@@ -1,0 +1,2 @@
+struct MockError: Error {
+}
