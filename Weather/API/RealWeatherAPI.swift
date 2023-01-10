@@ -28,6 +28,11 @@ final class RealWeatherAPI: WeatherAPI {
         guard let url = URL(string: "\(BASE_URL)/\(TORONTO_LOCATION_ID).json")
         else { throw APIError.invalidURL }
 
+        let data = try await sendGETRequest(to: url)
+        return try parseWeatherResponse(from: data)
+    }
+
+    private func sendGETRequest(to url: URL) async throws -> Data {
         let request = URLRequest(url: url)
         let (data, response) = try await URLSession.shared.data(for: request)
 
@@ -37,6 +42,10 @@ final class RealWeatherAPI: WeatherAPI {
         guard (200..<300).contains(response.statusCode)
         else { throw APIError.errorResponse(response.statusCode) }
 
+        return data
+    }
+
+    private func parseWeatherResponse(from data: Data) throws -> Weather {
         let decodedResponse = try decoder.decode(WeatherResponse.self, from: data)
 
         guard let mostRecentConsolidatedWeather = decodedResponse.consolidatedWeather.sorted().first

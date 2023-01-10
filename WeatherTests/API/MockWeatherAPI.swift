@@ -1,3 +1,4 @@
+import Foundation
 @testable import Weather
 
 final class MockWeatherAPI: WeatherAPI {
@@ -6,6 +7,9 @@ final class MockWeatherAPI: WeatherAPI {
 
     func fetchCurrentWeather() async throws -> Weather {
         fetchCurrentWeatherCalled = true
-        return Weather(temperature: 27, min: 13, max: 22, state: .showers)
+        return Weather(temperature: Measurement(value: 27, unit: .celsius),
+                       min: Measurement(value: 13, unit: .celsius),
+                       max: Measurement(value: 22, unit: .celsius),
+                       state: .showers)
     }
 }

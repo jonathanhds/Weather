@@ -106,11 +106,11 @@
 		ABE1DB45296C9ECA006B6351 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
-				ABE1DB7E296CA7FD006B6351 /* Features */,
-				ABE1DB75296CA055006B6351 /* Model */,
-				ABE1DB70296C9FFF006B6351 /* API */,
 				ABE1DB46296C9ECA006B6351 /* WeatherApp.swift */,
 				ABE1DB4A296C9ECB006B6351 /* Assets.xcassets */,
+				ABE1DB70296C9FFF006B6351 /* API */,
+				ABE1DB7E296CA7FD006B6351 /* Features */,
+				ABE1DB75296CA055006B6351 /* Model */,
 				ABE1DB4C296C9ECB006B6351 /* Preview Content */,
 			);
 			path = Weather;
@@ -170,9 +170,9 @@
 		ABE1DB7F296CA806006B6351 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				ABE1DB8C296CB348006B6351 /* WeatherDetailsView.swift */,
 				ABE1DB80296CA80E006B6351 /* WeatherView.swift */,
 				ABE1DB82296CA847006B6351 /* WeatherViewModel.swift */,
-				ABE1DB8C296CB348006B6351 /* WeatherDetailsView.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
