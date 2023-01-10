@@ -5,7 +5,7 @@ enum WeatherState {
 }
 
 extension WeatherState {
-    static func from(abbr: String) -> Self? {
+    static func from(abbreviation abbr: String) -> Self? {
         switch abbr {
         case "lr": return .lightRain
         case "lc": return .lightCloud

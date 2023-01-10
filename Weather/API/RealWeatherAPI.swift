@@ -3,7 +3,7 @@ import Foundation
 enum APIError: Error {
     case invalidURL
     case invalidResponse
-    case errorResponse
+    case errorResponse(Int)
     case emptyResponse
     case unknownWeatherState(String)
 }
@@ -14,32 +14,35 @@ final class RealWeatherAPI: WeatherAPI {
 
     private let TORONTO_LOCATION_ID = 4418
 
-    private lazy var iso8601Full: DateFormatter = {
+    private lazy var decoder: JSONDecoder = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-        return formatter
-    }()
 
-    private lazy var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(iso8601Full)
+        decoder.dateDecodingStrategy = .formatted(formatter)
+
         return decoder
     }()
 
     func fetchCurrentWeather() async throws -> Weather {
-        guard let url = URL(string: "\(BASE_URL)/\(TORONTO_LOCATION_ID).json") else { throw APIError.invalidURL }
-        let request = URLRequest(url: url)
+        guard let url = URL(string: "\(BASE_URL)/\(TORONTO_LOCATION_ID).json")
+        else { throw APIError.invalidURL }
 
+        let request = URLRequest(url: url)
         let (data, response) = try await URLSession.shared.data(for: request)
 
-        guard let response = response as? HTTPURLResponse else { throw APIError.invalidResponse }
-        guard (200..<300).contains(response.statusCode) else { throw APIError.errorResponse }
+        guard let response = response as? HTTPURLResponse
+        else { throw APIError.invalidResponse }
+
+        guard (200..<300).contains(response.statusCode)
+        else { throw APIError.errorResponse(response.statusCode) }
 
         let decodedResponse = try decoder.decode(WeatherResponse.self, from: data)
 
-        guard let mostRecentConsolidatedWeather = decodedResponse.consolidatedWeather.sorted().first else { throw APIError.emptyResponse  }
+        guard let mostRecentConsolidatedWeather = decodedResponse.consolidatedWeather.sorted().first
+        else { throw APIError.emptyResponse  }
 
-        guard let state = WeatherState.from(abbr: mostRecentConsolidatedWeather.weatherStateAbbr)
+        guard let state = WeatherState.from(abbreviation: mostRecentConsolidatedWeather.weatherStateAbbr)
         else { throw APIError.unknownWeatherState(mostRecentConsolidatedWeather.weatherStateAbbr) }
 
         return Weather(temperature: mostRecentConsolidatedWeather.temperature,

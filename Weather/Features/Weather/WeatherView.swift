@@ -13,7 +13,7 @@ struct WeatherView: View {
             case .error(let error):
                 Text(error.localizedDescription)
             case .data(let data):
-                Text(data.max, format: .number)
+                WeatherDetailsView(weather: data)
             }
 
             Spacer()
